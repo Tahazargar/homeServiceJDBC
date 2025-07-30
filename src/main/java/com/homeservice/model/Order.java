@@ -13,15 +13,12 @@ public class Order {
     private User user;
     private List<Suggestion> suggestions;
 
-    public Order(int id, String description, long price, OffsetDateTime date, short status, String address, User user, List<Suggestion> suggestions) {
-        this.id = id;
+    public Order(String description, long price, OffsetDateTime date, short status, String address) {
         this.description = description;
         this.price = price;
         this.date = date;
         this.status = status;
         this.address = address;
-        this.user = user;
-        this.suggestions = suggestions;
     }
 
     public int getId() {

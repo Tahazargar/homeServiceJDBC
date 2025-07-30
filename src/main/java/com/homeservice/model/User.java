@@ -32,8 +32,7 @@ public class User {
         this.suggestion = suggestion;
     }
 
-    public User(int id, String name, String lastName, String password, String email, String image, long credit, short status, short role) {
-        this.id = id;
+    public User(String name, String lastName, String password, String email, String image, long credit, short status, short role) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;

@@ -40,7 +40,6 @@ public class UserDAO {
 
             if(rs.next()){
                 User user = new User(
-                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("last_name"),
                         rs.getString("password"),
@@ -71,7 +70,6 @@ public class UserDAO {
 
             while(rs.next()){
                 users.add(new User(
-                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("last_name"),
                         rs.getString("password"),
