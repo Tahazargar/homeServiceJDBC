@@ -12,13 +12,11 @@ public class Comment {
         return service;
     }
 
-    public Comment(int id, String message, short star, short status, Service service, User user) {
+    public Comment(int id, String message, short star, short status) {
         this.id = id;
         this.message = message;
         this.star = star;
         this.status = status;
-        this.service = service;
-        this.user = user;
     }
 
     public void setService(Service service) {

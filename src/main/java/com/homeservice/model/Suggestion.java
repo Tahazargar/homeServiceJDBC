@@ -12,14 +12,12 @@ public class Suggestion {
     private List<User> users;
     private List<Order> orders;
 
-    public Suggestion(int id, long price, OffsetDateTime dueDate, OffsetDateTime startDate, Order order, List<User> users, List<Order> orders) {
+    public Suggestion(int id, long price, OffsetDateTime dueDate, OffsetDateTime startDate) {
         this.id = id;
         this.price = price;
         this.dueDate = dueDate;
         this.startDate = startDate;
         this.order = order;
-        this.users = users;
-        this.orders = orders;
     }
 
     public int getId() {

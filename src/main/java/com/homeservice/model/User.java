@@ -16,8 +16,6 @@ public class User {
     private List<Comment> comments;
     private Suggestion suggestion;
 
-    public User() {}
-
     public List<Comment> getComments() {
         return comments;
     }
@@ -34,7 +32,7 @@ public class User {
         this.suggestion = suggestion;
     }
 
-    public User(int id, String name, String lastName, String password, String email, String image, long credit, short status, short role, Suggestion suggestion) {
+    public User(int id, String name, String lastName, String password, String email, String image, long credit, short status, short role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -44,8 +42,6 @@ public class User {
         this.credit = credit;
         this.status = status;
         this.role = role;
-        this.comments = new ArrayList<>();
-        this.suggestion = suggestion;
     }
 
     public short getRole() {
