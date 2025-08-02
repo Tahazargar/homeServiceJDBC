@@ -17,7 +17,6 @@ public class Suggestion {
         this.price = price;
         this.dueDate = dueDate;
         this.startDate = startDate;
-        this.order = order;
     }
 
     public int getId() {

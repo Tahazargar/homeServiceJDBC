@@ -12,8 +12,7 @@ public class Comment {
         return service;
     }
 
-    public Comment(int id, String message, short star, short status) {
-        this.id = id;
+    public Comment(String message, short star, short status) {
         this.message = message;
         this.star = star;
         this.status = status;

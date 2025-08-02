@@ -140,7 +140,6 @@ public class UserDAO {
 
             while (rs.next()){
                 Comment comment = new Comment(
-                        rs.getInt("id"),
                         rs.getString("message"),
                         rs.getShort("star"),
                         rs.getShort("status")

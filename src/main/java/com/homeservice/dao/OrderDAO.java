@@ -6,6 +6,8 @@ import main.java.com.homeservice.util.DatabaseUtil;
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDAO {
     public void createUser(Order order) {
@@ -49,5 +51,43 @@ public class OrderDAO {
         }
 
         return null;
+    }
+
+    public List<Order> getAllOrders() {
+        String sql = "SELECT * FROM orders";
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection connection = DatabaseUtil.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while(rs.next()){
+                orders.add(new Order(
+                        rs.getString("description"),
+                        rs.getLong("price"),
+                        rs.getTimestamp("due_date").toInstant().atOffset(ZoneOffset.UTC),
+                        rs.getShort("status"),
+                        rs.getString("address")
+                ));
+
+                return orders;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
+
+    public void deleteOrderById(int id) {
+        String sql = "DELETE FROM orders WHERE id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate(sql);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
