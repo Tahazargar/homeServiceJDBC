@@ -1,4 +1,4 @@
-package main.java.com.homeservice.controller;
+package com.homeservice.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,6 +33,6 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
     }
 }
