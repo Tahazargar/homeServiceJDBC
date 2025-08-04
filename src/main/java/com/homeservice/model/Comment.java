@@ -1,4 +1,4 @@
-package main.java.com.homeservice.model;
+package com.homeservice.model;
 
 public class Comment {
     private int id;

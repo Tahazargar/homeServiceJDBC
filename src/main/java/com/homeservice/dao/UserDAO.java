@@ -1,8 +1,9 @@
-package main.java.com.homeservice.dao;
+package com.homeservice.dao;
 
-import main.java.com.homeservice.model.Comment;
-import main.java.com.homeservice.model.Suggestion;
-import main.java.com.homeservice.model.User;
+import com.homeservice.model.Comment;
+import com.homeservice.model.Suggestion;
+import com.homeservice.model.User;
+import com.homeservice.util.PasswordUtil;
 import main.java.com.homeservice.util.DatabaseUtil;
 
 import java.sql.*;
@@ -43,11 +44,7 @@ public class UserDAO {
                         rs.getString("name"),
                         rs.getString("last_name"),
                         rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("image"),
-                        rs.getLong("credit"),
-                        rs.getShort("status"),
-                        rs.getShort("role")
+                        rs.getString("email")
                 );
 
                 user.setComments(loadCommentsForUser(id));
@@ -73,11 +70,7 @@ public class UserDAO {
                         rs.getString("name"),
                         rs.getString("last_name"),
                         rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("image"),
-                        rs.getLong("credit"),
-                        rs.getShort("status"),
-                        rs.getShort("role")
+                        rs.getString("email")
                 ));
 
                 return users;
@@ -100,6 +93,34 @@ public class UserDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public User getUserByEmailAndPassword(String email, String password) {
+        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+        try(Connection connection = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            String hashedPassword = PasswordUtil.hashPassword(password);
+
+            stmt.setString(1, email);
+            stmt.setString(2, hashedPassword);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()){
+                return new User(
+                  rs.getString("name"),
+                  rs.getString("last_name"),
+                  rs.getString("password"),
+                  rs.getString("email")
+                );
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private Suggestion loadSuggestionForUser(int userId) {

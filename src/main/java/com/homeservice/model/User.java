@@ -1,4 +1,4 @@
-package main.java.com.homeservice.model;
+package com.homeservice.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +32,11 @@ public class User {
         this.suggestion = suggestion;
     }
 
-    public User(String name, String lastName, String password, String email, String image, long credit, short status, short role) {
+    public User(String name, String lastName, String password, String email) {
         this.name = name;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.image = image;
-        this.credit = credit;
-        this.status = status;
-        this.role = role;
     }
 
     public short getRole() {

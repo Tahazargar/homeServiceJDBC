@@ -1,4 +1,4 @@
-package main.java.com.homeservice.model;
+package com.homeservice.model;
 
 import java.util.List;
 

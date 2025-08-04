@@ -1,6 +1,6 @@
-package main.java.com.homeservice.dao;
+package com.homeservice.dao;
 
-import main.java.com.homeservice.model.Comment;
+import com.homeservice.model.Comment;
 import main.java.com.homeservice.util.DatabaseUtil;
 
 import java.sql.*;

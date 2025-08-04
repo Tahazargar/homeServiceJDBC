@@ -1,4 +1,4 @@
-package main.java.com.homeservice.model;
+package com.homeservice.model;
 
 import java.time.OffsetDateTime;
 import java.util.List;

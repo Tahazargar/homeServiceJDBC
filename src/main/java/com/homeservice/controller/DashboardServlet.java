@@ -8,11 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-//@WebServlet("/")
-//public class DashboardServlet extends HttpServlet {
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-//            throws ServletException, IOException {
-//        resp.setContentType("text/html");
-//        resp.getWriter().write("<h1>Welcome to Home Service App</h1>");
-//    }
-//}
+@WebServlet("/")
+public class DashboardServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.getRequestDispatcher("WEB-INF/jsp/dashboard.jsp").forward(req, resp);
+    }
+}
