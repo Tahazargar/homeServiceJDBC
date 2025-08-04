@@ -1,3 +1,4 @@
+<%@ page import="com.homeservice.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if(session.getAttribute("currentUser") ==  null){
@@ -11,6 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Dashboard</title>
     <style>
+        body, html{
+            overflow-x: hidden;
+        }
+
         .sidebar {
             width: 220px;
             background-color: #2f3542;
@@ -83,7 +88,10 @@
     <h2>Dashboard</h2>
     <ul>
         <li><a href="#">Overview</a></li>
-        <li><a href="#">Users</a></li>
+        <c:if test="${currentUser.role == 2}">
+            <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
+        </c:if>
+
         <li><a href="#">Experts</a></li>
         <li><a href="#">Requests</a></li>
         <li><a href="#">Settings</a></li>

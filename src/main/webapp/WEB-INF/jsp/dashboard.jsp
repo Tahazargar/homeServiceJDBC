@@ -87,7 +87,10 @@
     <h2>Dashboard</h2>
     <ul>
         <li><a href="#">Overview</a></li>
-        <li><a href="#">Users</a></li>
+        <c:if test="${currentUser.role == 2}">
+            <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
+        </c:if>
+
         <li><a href="#">Experts</a></li>
         <li><a href="#">Requests</a></li>
         <li><a href="#">Settings</a></li>

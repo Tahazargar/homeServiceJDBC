@@ -32,12 +32,7 @@ public class User {
         this.suggestion = suggestion;
     }
 
-    public User(String name, String lastName, String password, String email) {
-        this.name = name;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-    }
+    public User() {}
 
     public short getRole() {
         return role;
@@ -109,5 +104,17 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                '}';
     }
 }

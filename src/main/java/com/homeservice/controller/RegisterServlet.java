@@ -25,7 +25,11 @@ public class RegisterServlet extends HttpServlet {
         String name = nameParts.length > 0 ? nameParts[0] : "";
         String lastName = nameParts.length > 1 ? nameParts[1] : "";
 
-        User user = new User(name, lastName, hashedPassword, email);
+        User user = new User();
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(hashedPassword);
 
         UserDAO userDAO = new UserDAO();
         userDAO.createUser(user);

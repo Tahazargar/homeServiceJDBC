@@ -40,15 +40,17 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
 
             if(rs.next()){
-                User user = new User(
-                        rs.getString("name"),
-                        rs.getString("last_name"),
-                        rs.getString("password"),
-                        rs.getString("email")
-                );
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
 
                 user.setComments(loadCommentsForUser(id));
                 user.setSuggestion(loadSuggestionForUser(id));
+
+                return user;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -66,20 +68,23 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-                users.add(new User(
-                        rs.getString("name"),
-                        rs.getString("last_name"),
-                        rs.getString("password"),
-                        rs.getString("email")
-                ));
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getShort("role"));
+                user.setStatus(rs.getShort("status"));
+                user.setPassword(rs.getString("password"));
 
-                return users;
+                users.add(user);
             }
+            return users;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
-        return null;
+        return users;
     }
 
     public void deleteUserById(int id) {
@@ -109,12 +114,16 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()){
-                return new User(
-                  rs.getString("name"),
-                  rs.getString("last_name"),
-                  rs.getString("password"),
-                  rs.getString("email")
-                );
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getShort("role"));
+                user.setStatus(rs.getShort("status"));
+                user.setPassword(hashedPassword);
+
+                return user;
             }
         }catch (SQLException e){
             e.printStackTrace();
