@@ -10,9 +10,14 @@
 <body>
 <h2>All Users</h2>
 
-<a href="add-user">
-    <button>Add User</button>
-</a>
+<div class="buttons" style="margin-bottom: 15px;">
+    <a href="/">
+        <button>Back To Dashboard</button>
+    </a>
+    <a href="add-user">
+        <button>Add User</button>
+    </a>
+</div>
 
 <table border="1" cellpadding="10" cellspacing="0">
     <thead>

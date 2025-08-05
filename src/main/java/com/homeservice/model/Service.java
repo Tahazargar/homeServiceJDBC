@@ -1,5 +1,6 @@
 package com.homeservice.model;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public class Service {
@@ -7,17 +8,13 @@ public class Service {
     private String title;
     private long price;
     private short status;
+    private int parentID;
+    private String parentTitle;
+    private OffsetDateTime createdAt;
     private String description;
     private List<Comment> comments;
 
-    public Service(int id, String title, long price, short status, String description, List<Comment> comments) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-        this.status = status;
-        this.description = description;
-        this.comments = comments;
-    }
+    public Service() {}
 
     public int getId() {
         return id;
@@ -65,5 +62,29 @@ public class Service {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public int getParentID() {
+        return parentID;
+    }
+
+    public void setParentID(int parentID) {
+        this.parentID = parentID;
+    }
+
+    public String getParentTitle() {
+        return parentTitle;
+    }
+
+    public void setParentTitle(String parentTitle) {
+        this.parentTitle = parentTitle;
     }
 }

@@ -91,7 +91,7 @@
             <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
         </c:if>
 
-        <li><a href="#">Experts</a></li>
+        <li><a href="${pageContext.request.contextPath}/services">Services</a></li>
         <li><a href="#">Requests</a></li>
         <li><a href="#">Settings</a></li>
         <li><a href="#">Logout</a></li>

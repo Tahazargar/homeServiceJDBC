@@ -20,6 +20,7 @@ public class AddUserServlet extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        short role = Short.parseShort(request.getParameter("role"));
 
         if(fullName.isEmpty() || email.isEmpty() || password.isEmpty()
         || fullName == null || email == null || password == null){
@@ -39,6 +40,7 @@ public class AddUserServlet extends HttpServlet {
         user.setPassword(password);
         user.setName(name);
         user.setLastName(lastName);
+        user.setRole(role);
 
         boolean success = userDAO.createUser(user);
 
