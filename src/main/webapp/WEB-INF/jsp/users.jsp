@@ -10,6 +10,10 @@
 <body>
 <h2>All Users</h2>
 
+<a href="add-user">
+    <button>Add User</button>
+</a>
+
 <table border="1" cellpadding="10" cellspacing="0">
     <thead>
     <tr>
@@ -19,6 +23,8 @@
         <th>Email</th>
         <th>Role</th>
         <th>Status</th>
+        <th>Update</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -43,6 +49,12 @@
                     <c:otherwise>Banned</c:otherwise>
                 </c:choose>
 
+            </td>
+            <td>
+                Update
+            </td>
+            <td>
+                <a href="delete-user?id=${user.id}">Delete</a>
             </td>
         </tr>
         <% counter++; %>

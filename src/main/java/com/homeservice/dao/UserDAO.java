@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-    public void createUser(User user) {
+    public boolean createUser(User user) {
         String sql = "INSERT INTO users (name, last_name, email, password, role, status) VALUES (?,?,?,?,?,?)";
         try(Connection connection = DatabaseUtil.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -20,14 +20,18 @@ public class UserDAO {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getLastName());
             stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
+            stmt.setString(4, PasswordUtil.hashPassword(user.getPassword()));
             stmt.setShort(5, user.getRole());
             stmt.setShort(6, user.getStatus());
 
             stmt.executeUpdate();
+
+            return true;
         }catch (SQLException e){
             e.printStackTrace();
         }
+
+        return false;
     }
 
     public User getUserById(int id) {
@@ -87,7 +91,7 @@ public class UserDAO {
         return users;
     }
 
-    public void deleteUserById(int id) {
+    public boolean deleteUserById(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
 
         try (Connection connection = DatabaseUtil.getConnection()){
@@ -95,9 +99,13 @@ public class UserDAO {
 
             stmt.setInt(1, id);
             stmt.executeUpdate();
+
+            return true;
         }catch (SQLException e){
             e.printStackTrace();
         }
+
+        return false;
     }
 
     public User getUserByEmailAndPassword(String email, String password) {
