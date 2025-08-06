@@ -1,4 +1,4 @@
-package main.java.com.homeservice.util;
+package com.homeservice.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

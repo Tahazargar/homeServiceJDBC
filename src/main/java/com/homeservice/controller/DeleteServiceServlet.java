@@ -33,6 +33,6 @@ public class DeleteServiceServlet extends HttpServlet {
             }
         }
 
-        response.sendRedirect("Services");
+        response.sendRedirect("services");
     }
 }

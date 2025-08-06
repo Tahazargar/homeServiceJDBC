@@ -1,6 +1,7 @@
 package com.homeservice.dao;
 
 import com.homeservice.model.Service;
+import com.homeservice.util.DatabaseUtil;
 
 import java.sql.*;
 import java.time.ZoneOffset;
@@ -9,14 +10,16 @@ import java.util.List;
 
 public class ServiceDAO {
     public boolean createService(Service service) {
-        String sql = "INSERT INTO services (title, price, status, description) VALUES (?,?,?,?)";
-        try(Connection connection = main.java.com.homeservice.util.DatabaseUtil.getConnection()){
+        String sql = "INSERT INTO services (title, price, status, description, parent_id) VALUES (?,?,?,?,?)";
+        try(Connection connection = DatabaseUtil.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setString(1, service.getTitle());
             stmt.setDouble(2, service.getPrice());
             stmt.setInt(3, service.getStatus());
             stmt.setString(4, service.getDescription());
+            stmt.setInt(5, service.getParentID());
+
 
             stmt.executeUpdate();
 
@@ -36,7 +39,7 @@ public class ServiceDAO {
                 "LEFT JOIN services p ON s.parent_id = p.id\n";
         List<Service> services = new ArrayList<>();
 
-        try(Connection connection = main.java.com.homeservice.util.DatabaseUtil.getConnection()) {
+        try(Connection connection = DatabaseUtil.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -48,7 +51,9 @@ public class ServiceDAO {
                 service.setDescription(rs.getString("description"));
                 service.setStatus(rs.getShort("status"));
                 service.setCreatedAt(rs.getTimestamp("created_at").toInstant().atOffset(ZoneOffset.UTC));
+                service.setParentID(rs.getObject("parent_id", Integer.class));
                 service.setParentTitle(rs.getString("parent_title"));
+
 
                 services.add(service);
             }
@@ -63,7 +68,7 @@ public class ServiceDAO {
     public boolean deleteServiceById(int id) {
         String sql = "DELETE FROM services WHERE id = ?";
 
-        try (Connection connection = main.java.com.homeservice.util.DatabaseUtil.getConnection()){
+        try (Connection connection = DatabaseUtil.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setInt(1, id);
@@ -77,5 +82,25 @@ public class ServiceDAO {
         return false;
     }
 
+    public List<Service> getRootServices() {
+        String sql = "SELECT id, title FROM services WHERE parent_id IS null";
+        List<Service> services = new ArrayList<>();
 
+        try(Connection connection = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                Service service = new Service();
+
+                service.setId(rs.getInt("id"));
+                service.setTitle(rs.getString("title"));
+                services.add(service);
+            }
+            return services;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return services;
+    }
 }

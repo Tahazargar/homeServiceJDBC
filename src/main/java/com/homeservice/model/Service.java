@@ -8,7 +8,7 @@ public class Service {
     private String title;
     private long price;
     private short status;
-    private int parentID;
+    private Integer parentID;
     private String parentTitle;
     private OffsetDateTime createdAt;
     private String description;
@@ -72,11 +72,11 @@ public class Service {
         this.createdAt = createdAt;
     }
 
-    public int getParentID() {
+    public Integer getParentID() {
         return parentID;
     }
 
-    public void setParentID(int parentID) {
+    public void setParentID(Integer parentID) {
         this.parentID = parentID;
     }
 

@@ -1,7 +1,7 @@
 package com.homeservice.dao;
 
 import com.homeservice.model.Order;
-import main.java.com.homeservice.util.DatabaseUtil;
+import com.homeservice.util.DatabaseUtil;
 
 import java.sql.*;
 import java.time.OffsetDateTime;

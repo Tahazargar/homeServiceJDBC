@@ -3,8 +3,8 @@ package com.homeservice.dao;
 import com.homeservice.model.Comment;
 import com.homeservice.model.Suggestion;
 import com.homeservice.model.User;
+import com.homeservice.util.DatabaseUtil;
 import com.homeservice.util.PasswordUtil;
-import main.java.com.homeservice.util.DatabaseUtil;
 
 import java.sql.*;
 import java.time.ZoneOffset;

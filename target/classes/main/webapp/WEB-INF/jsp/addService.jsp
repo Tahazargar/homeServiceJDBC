@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
 <html>
 <head>
     <title>Create Service</title>
@@ -10,18 +12,30 @@
     <input type="text" id="title" name="title" required><br><br>
 
     <label for="price">Price:</label><br>
-    <input type="number" id="price" name="price" required><br><br>
+    <input type="number" id="price" name="price"><br><br>
 
     <label for="description">Description:</label><br>
     <input type="text" id="description" name="description" required><br><br>
 
-    <label for="status">Status:</label><br>
-    <select id="status" name="status">
-        <option value="0">Inactive</option>
-        <option value="1" selected>Active</option>
-    </select>
+    <div>
+        <label for="status">Status:</label><br>
+        <select id="status" name="status">
+            <option value="0">Inactive</option>
+            <option value="1" selected>Active</option>
+        </select>
+    </div>
 
-    <button type="submit">Create Service</button>
+    <div>
+        <label for="parentID">Parent:</label><br>
+        <select id="parentID" name="parentID">
+            <option value="">none</option>
+            <c:forEach var="rootService" items="${rootServices}">
+                <option value="${rootService.id}">${rootService.title}</option>
+            </c:forEach>
+        </select>
+    </div>
+
+    <button style="display: block" type="submit">Create Service</button>
 </form>
 </body>
 </html>

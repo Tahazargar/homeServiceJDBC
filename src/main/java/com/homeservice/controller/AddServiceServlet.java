@@ -11,10 +11,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/add-service")
 public class AddServiceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServiceDAO serviceDAO = new ServiceDAO();
+        List<Service> rootServices = serviceDAO.getRootServices();
+
+        request.setAttribute("rootServices", rootServices);
         request.getRequestDispatcher("/WEB-INF/jsp/addService.jsp").forward(request, response);
     }
 
@@ -23,6 +28,15 @@ public class AddServiceServlet extends HttpServlet {
         int price = Integer.parseInt(request.getParameter("price"));
         String description = request.getParameter("description");
         short status = Short.parseShort(request.getParameter("status"));
+
+        String parentParam = request.getParameter("parentID");
+        Integer parentID = null;
+
+        if (parentParam != null && !parentParam.isEmpty()) {
+            parentID = Integer.parseInt(parentParam);
+        }
+
+
 
         if(title.isEmpty()  || title == null){
             request.setAttribute("error", "Please fill all the fields");
@@ -36,6 +50,7 @@ public class AddServiceServlet extends HttpServlet {
         service.setPrice(price);
         service.setDescription(description);
         service.setStatus(status);
+        service.setParentID(parentID);
 
         boolean success = serviceDAO.createService(service);
 

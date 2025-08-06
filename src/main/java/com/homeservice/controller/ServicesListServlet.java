@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,8 @@ public class ServicesListServlet extends HttpServlet {
         Map<Integer, String> idToName = services.stream().collect(Collectors.toMap(Service::getId, Service::getTitle));
 
         for( Service s : services ) {
-            if(s.getParentID() != 0){
+            System.out.println("Service: " + s.getTitle() + ", Parent ID: " + s.getParentID() + ", Parent Title: " + s.getParentTitle());
+            if(s.getParentID() != null && s.getParentID() != 0){
                 s.setParentTitle(idToName.get(s.getParentID()));
             }
         }
