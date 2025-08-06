@@ -80,6 +80,7 @@ public class UserDAO {
                 user.setRole(rs.getShort("role"));
                 user.setStatus(rs.getShort("status"));
                 user.setPassword(rs.getString("password"));
+                user.setCreatedAt(rs.getTimestamp("created_at").toInstant().atOffset(ZoneOffset.UTC));
 
                 users.add(user);
             }

@@ -1,5 +1,6 @@
 package com.homeservice.model;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ public class User {
     private long credit;
     private short status;
     private short role;
+    private Integer createdYear;
+    private OffsetDateTime createdAt;
     private List<Comment> comments;
     private Suggestion suggestion;
 
@@ -104,6 +107,22 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Integer getCreatedYear() {
+        return createdYear;
+    }
+
+    public void setCreatedYear(Integer createdYear) {
+        this.createdYear = createdYear;
     }
 
     @Override

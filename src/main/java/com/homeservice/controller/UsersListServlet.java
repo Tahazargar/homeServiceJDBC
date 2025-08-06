@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @WebServlet("/users")
@@ -26,6 +28,13 @@ public class UsersListServlet extends HttpServlet {
 
         UserDAO userDAO = new UserDAO();
         List<User> users = userDAO.getAllUsers();
+
+        for(User user : users){
+            if(user.getCreatedAt() != null){
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(user.getCreatedAt().toString());
+                user.setCreatedYear(zonedDateTime.getYear());
+            }
+        }
 
         request.setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/jsp/users.jsp").forward(request, response);

@@ -1,3 +1,4 @@
+<%@ page import="java.time.ZonedDateTime" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
@@ -28,6 +29,7 @@
         <th>Email</th>
         <th>Role</th>
         <th>Status</th>
+        <th>Created At</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
@@ -55,6 +57,7 @@
                 </c:choose>
 
             </td>
+            <td>${user.createdYear}</td>
             <td>
                 Update
             </td>

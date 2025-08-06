@@ -18,7 +18,7 @@ public class ServiceDAO {
             stmt.setDouble(2, service.getPrice());
             stmt.setInt(3, service.getStatus());
             stmt.setString(4, service.getDescription());
-            stmt.setInt(5, service.getParentID());
+            stmt.setObject(5, service.getParentID(), Types.INTEGER);
 
 
             stmt.executeUpdate();
