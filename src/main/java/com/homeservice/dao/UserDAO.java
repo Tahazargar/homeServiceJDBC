@@ -92,6 +92,31 @@ public class UserDAO {
         return users;
     }
 
+    public List<User> getAllUsersByRole(int role) {
+        String sql = "SELECT * FROM users WHERE role = ?";
+        List<User> users = new ArrayList<>();
+
+        try(Connection connection = DatabaseUtil.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, role);
+            ResultSet rs = stmt.executeQuery();
+
+
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
     public boolean deleteUserById(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
 
