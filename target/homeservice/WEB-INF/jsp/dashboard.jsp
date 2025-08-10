@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     if(session.getAttribute("currentUser") ==  null){
         response.sendRedirect("login");
@@ -84,24 +85,43 @@
 </head>
 <body>
 <div class="sidebar">
-    <h2>Dashboard</h2>
+    <h2>
+        <c:choose>
+            <c:when test="${sessionScope.currentUser.role == 2}">Admins </c:when>
+            <c:when test="${sessionScope.currentUser.role == 1}">Experts </c:when>
+            <c:when test="${sessionScope.currentUser.role == 0}">Users </c:when>
+        </c:choose>
+        Dashboard
+    </h2>
     <ul>
         <li><a href="#">Overview</a></li>
-        <c:if test="${currentUser.role == 2}">
+        <c:if test="${sessionScope.currentUser.role == 2}">
             <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
+            <li><a href="${pageContext.request.contextPath}/assignService">Assign Service</a></li>
+            <li><a href="#">Settings</a></li>
+        </c:if>
+        <c:if test="${sessionScope.currentUser.role == 1 || sessionScope.currentUser.role == 2}">
+            <li><a href="#">Requests</a></li>
         </c:if>
 
-        <li><a href="${pageContext.request.contextPath}/services">Services</a></li>
-        <li><a href="${pageContext.request.contextPath}/assignService">Assign Service</a></li>
-        <li><a href="#">Requests</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Logout</a></li>
+        <c:if test="${sessionScope.currentUser.role == 0 || sessionScope.currentUser.role == 2}">
+            <li><a href="${pageContext.request.contextPath}/services">Services</a></li>
+            <li><a href="${pageContext.request.contextPath}/userSubmittedOrders">Submitted Orders</a></li>
+        </c:if>
+        <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
     </ul>
 </div>
 
 <div class="main-content">
     <div class="header">
-        <h1 style="margin-left: 30px">Welcome to the Admin Dashboard</h1>
+        <h1 style="margin-left: 30px">
+            Welcome ${sessionScope.currentUser.name}, you are
+            <c:choose>
+                <c:when test="${sessionScope.currentUser.role == 2}">Admin </c:when>
+                <c:when test="${sessionScope.currentUser.role == 1}">Expert </c:when>
+                <c:when test="${sessionScope.currentUser.role == 0}">User </c:when>
+            </c:choose>
+        </h1>
     </div>
 
     <div class="content">

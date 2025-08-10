@@ -20,13 +20,12 @@ public class UnassignServiceServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         long userId = Long.parseLong(req.getParameter("userId"));
         long serviceId = Long.parseLong(req.getParameter("serviceId"));
 
         boolean unassigned = dao.unassignServiceFromUser(userId, serviceId);
 
-        resp.setContentType("application/json");
-        resp.getWriter().write("{\"unassigned\": " + unassigned + "}");
+        resp.sendRedirect("/assignService");
     }
 }

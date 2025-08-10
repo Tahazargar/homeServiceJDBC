@@ -1,25 +1,21 @@
 package com.homeservice.model;
 
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class Order {
     private int id;
     private String description;
     private long price;
-    private OffsetDateTime date;
+    private Date date;
     private short status;
     private String address;
     private User user;
     private List<Suggestion> suggestions;
+    private String dueDateFormatted;
 
-    public Order(String description, long price, OffsetDateTime date, short status, String address) {
-        this.description = description;
-        this.price = price;
-        this.date = date;
-        this.status = status;
-        this.address = address;
-    }
+    public Order() {}
 
     public int getId() {
         return id;
@@ -45,11 +41,11 @@ public class Order {
         this.price = price;
     }
 
-    public OffsetDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(OffsetDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -83,5 +79,13 @@ public class Order {
 
     public void setSuggestions(List<Suggestion> suggestions) {
         this.suggestions = suggestions;
+    }
+
+    public String getDueDateFormatted() {
+        return dueDateFormatted;
+    }
+
+    public void setDueDateFormatted(String dueDateFormatted) {
+        this.dueDateFormatted = dueDateFormatted;
     }
 }

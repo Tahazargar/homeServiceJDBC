@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO {
-    public void createUser(Order order) {
-        String sql = "INSERT INTO orders (description, price, date, status, address) VALUES (?,?,?,?,?)";
+    public void createOrder(Order order) {
+        String sql = "INSERT INTO orders (description, price, due_date, address, user_id) VALUES (?,?,?,?,?)";
 
         try(Connection conn = DatabaseUtil.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -19,8 +19,8 @@ public class OrderDAO {
             ps.setString(1,order.getDescription());
             ps.setLong(2,order.getPrice());
             ps.setTimestamp(3, Timestamp.from(OffsetDateTime.now(ZoneOffset.UTC).toInstant()));
-            ps.setShort(4, order.getStatus());
-            ps.setString(5, order.getAddress());
+            ps.setString(4, order.getAddress());
+            ps.setInt(5, order.getId());
 
             ps.executeUpdate();
         }catch (SQLException e){
@@ -38,13 +38,15 @@ public class OrderDAO {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()){
-                return new Order(
-                    rs.getString("description"),
-                    rs.getLong("price"),
-                    rs.getTimestamp("due_date").toInstant().atOffset(ZoneOffset.UTC),
-                    rs.getShort("status"),
-                    rs.getString("address")
-                );
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setDescription(rs.getString("description"));
+                order.setPrice(rs.getLong("price"));
+                order.setStatus(rs.getShort("status"));
+                order.setAddress(rs.getString("address"));
+                order.setDate(rs.getTimestamp("due_date"));
+
+                return order;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -62,14 +64,16 @@ public class OrderDAO {
             ResultSet rs = statement.executeQuery(sql);
 
             while(rs.next()){
-                orders.add(new Order(
-                        rs.getString("description"),
-                        rs.getLong("price"),
-                        rs.getTimestamp("due_date").toInstant().atOffset(ZoneOffset.UTC),
-                        rs.getShort("status"),
-                        rs.getString("address")
-                ));
+                Order order = new Order();
 
+                order.setId(rs.getInt("id"));
+                order.setDescription(rs.getString("description"));
+                order.setPrice(rs.getLong("price"));
+                order.setStatus(rs.getShort("status"));
+                order.setAddress(rs.getString("address"));
+                order.setDate(rs.getTimestamp("due_date"));
+
+                orders.add(order);
                 return orders;
             }
         }catch (SQLException e){
@@ -89,5 +93,32 @@ public class OrderDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public List<Order> getUserSubmittedOrders(int userId) {
+        String sql = "SELECT * FROM orders WHERE user_id = ?";
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setDescription(rs.getString("description"));
+                order.setPrice(rs.getLong("price"));
+                order.setStatus(rs.getShort("status"));
+                order.setAddress(rs.getString("address"));
+                order.setDate(rs.getTimestamp("due_date"));
+                orders.add(order);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return orders;
     }
 }

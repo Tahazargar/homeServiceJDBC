@@ -103,4 +103,31 @@ public class ServiceDAO {
         }
         return services;
     }
+
+    public List<Service> getServiceByUserID(int userID) {
+        List<Service> services = new ArrayList<>();
+
+        String sql = "SELECT s.id, s.title, s.description " + // add more columns if needed
+                "FROM services s " +
+                "INNER JOIN user_service us ON s.id = us.service_id " +
+                "WHERE us.user_id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                Service service = new Service();
+                service.setId(rs.getInt("id"));
+                service.setTitle(rs.getString("title"));
+                service.setDescription(rs.getString("description"));
+                services.add(service);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return services;
+    }
 }

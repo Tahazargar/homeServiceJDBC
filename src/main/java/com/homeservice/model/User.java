@@ -18,6 +18,15 @@ public class User {
     private OffsetDateTime createdAt;
     private List<Comment> comments;
     private Suggestion suggestion;
+    private List<Service> services;
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
 
     public List<Comment> getComments() {
         return comments;

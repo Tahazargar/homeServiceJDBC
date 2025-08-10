@@ -4,6 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<User> users = (List<User>) request.getAttribute("users"); %>
 <% List<Service> services = (List<Service>) request.getAttribute("services"); %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <html>
 <head>
     <title>Assign Service to User</title>
@@ -36,6 +37,49 @@
     <button type="submit">Assign Service</button>
 </form>
 
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+    <tr>
+        <th>NO.</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Service</th>
+        <th>Assigned at</th>
+        <th>Unassign</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% int counter = 1; %>
+    <c:forEach var="user" items="${users}">
+        <tr>
+            <td><%= counter %></td>
+            <td>${user.name}</td>
+            <td>${user.lastName}</td>
+            <td>${user.email}</td>
+            <td>
+                <c:forEach var="srv" items="${user.services}">
+                    ${srv.title}<br/>
+                </c:forEach>
+            </td>
+
+            <td>
+                Update
+            </td>
+            <td>
+                <c:forEach var="srv" items="${user.services}">
+                    <form action="/unassignService" method="POST" style="margin-bottom:5px;">
+                        <input type="hidden" name="userId" value="${user.id}">
+                        <input type="hidden" name="serviceId" value="${srv.id}">
+                        <button type="submit">Unassign ${srv.title}</button>
+                    </form>
+                </c:forEach>
+            </td>
+        </tr>
+        <% counter++; %>
+    </c:forEach>
+    </tbody>
+</table>
 
 </body>
 </html>

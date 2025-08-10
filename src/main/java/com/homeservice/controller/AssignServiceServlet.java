@@ -27,7 +27,14 @@ public class AssignServiceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDAO userDao = new UserDAO();
         ServiceDAO serviceDao = new ServiceDAO();
+
         List<User> users = userDao.getAllUsersByRole(1);
+
+        for (User user : users) {
+            List<Service> assingedServicecs = serviceDao.getServiceByUserID(user.getId());
+            user.setServices(assingedServicecs);
+        }
+
         List<Service> services = serviceDao.getAllServices();
 
         req.setAttribute("users", users);
