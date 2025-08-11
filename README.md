@@ -1,4 +1,4 @@
-# 🏠 Home Services Management System (Java + JDBC)
+# 🏠 Home Services Management System V1 (Java + JDBC)
 
 This project is a pure Java application using JDBC and PostgreSQL to manage a home service platform. It supports roles like **Admin**, **Customer**, and **Expert**, enabling service listings, user registration, expert approval, order handling, offers, credits, and feedback.
 
@@ -52,20 +52,9 @@ This project is a pure Java application using JDBC and PostgreSQL to manage a ho
     - `COMPLETED`
     - `PAID`
 
-### 💬 Expert Offers
-- Experts can submit offers on orders with:
-    - Proposed price
-    - Suggested start datetime (not earlier than customer's)
-    - Estimated duration
-    - Offer timestamp
-
 ### 💰 Credit System
 - Customers use credit to pay for services
 - Experts receive credit when orders are paid
 - Credit is tracked per user
 
-### ⭐ Feedback
-- After completion, customers can:
-    - Rate the expert (1–5 stars)
-    - Leave a comment (optional)
 

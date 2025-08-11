@@ -26,7 +26,7 @@
     <tr>
         <th>NO.</th>
         <th>Title</th>
-        <th>Price</th>
+        <th>Base price</th>
         <th>Description</th>
         <c:if test="${sessionScope.currentUser.role == 0}">
             <th>Order</th>
@@ -50,7 +50,7 @@
             <td>${service.description}</td>
             <c:if test="${sessionScope.currentUser.role == 0}">
                 <td>
-                    <a href="${pageContext.request.contextPath}/submitOrder">Order</a>
+                    <a href="${pageContext.request.contextPath}/submitOrder?serviceId=${service.id}">Order</a>
                 </td>
             </c:if>
             <c:if test="${sessionScope.currentUser.role == 2}">

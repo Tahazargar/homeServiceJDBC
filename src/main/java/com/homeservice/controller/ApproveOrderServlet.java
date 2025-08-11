@@ -9,28 +9,32 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/userSubmittedOrders")
-public class UserSubmittedOrdersServlet extends HttpServlet {
+@WebServlet("/approveOrder")
+public class ApproveOrderServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+
+        OrderDAO orderDAO = new OrderDAO();
+        orderDAO.assignExpertToOrder(userId, orderId);
+
+        response.sendRedirect("approveOrder");
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderDAO orderDAO = new OrderDAO();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("currentUser");
         int userId = user.getId();
 
-        List<Order> userOrders = orderDAO.getUserSubmittedOrders(userId);
+        List<Order> orders = orderDAO.getExpertJobsById(userId);
 
-        request.setAttribute("userOrders", userOrders);
-        request.getRequestDispatcher("/WEB-INF/jsp/userSubmittedOrders.jsp").forward(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int orderId = Integer.parseInt(request.getParameter("orderId"));
-        OrderDAO orderDAO = new OrderDAO();
-        orderDAO.deleteOrderById(orderId);
-
-        response.sendRedirect("userSubmittedOrders");
+        request.setAttribute("orders", orders);
+        request.setAttribute("userId", userId);
+        request.getRequestDispatcher("/WEB-INF/jsp/expertJobs.jsp").forward(request, response);
     }
 }

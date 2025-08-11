@@ -98,14 +98,21 @@
         <c:if test="${sessionScope.currentUser.role == 2}">
             <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
             <li><a href="${pageContext.request.contextPath}/assignService">Assign Service</a></li>
+            <li><a href="${pageContext.request.contextPath}/credits">Credits</a></li>
             <li><a href="#">Settings</a></li>
         </c:if>
         <c:if test="${sessionScope.currentUser.role == 1 || sessionScope.currentUser.role == 2}">
-            <li><a href="#">Requests</a></li>
+            <li><a href="${pageContext.request.contextPath}/requests">Requests</a></li>
+        </c:if>
+
+        <c:if test="${sessionScope.currentUser.role == 1}">
+            <li><a href="${pageContext.request.contextPath}/approveOrder">My jobs</a></li>
         </c:if>
 
         <c:if test="${sessionScope.currentUser.role == 0 || sessionScope.currentUser.role == 2}">
             <li><a href="${pageContext.request.contextPath}/services">Services</a></li>
+        </c:if>
+        <c:if test="${sessionScope.currentUser.role == 0}">
             <li><a href="${pageContext.request.contextPath}/userSubmittedOrders">Submitted Orders</a></li>
         </c:if>
         <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
@@ -122,6 +129,7 @@
                 <c:when test="${sessionScope.currentUser.role == 0}">User </c:when>
             </c:choose>
         </h1>
+        <p style="margin-left: 30px">Your credit is: ${sessionScope.currentUser.credit}$</p>
     </div>
 
     <div class="content">

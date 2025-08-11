@@ -3,6 +3,7 @@ package com.homeservice.dao;
 import com.homeservice.model.Service;
 import com.homeservice.util.DatabaseUtil;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -129,5 +130,27 @@ public class ServiceDAO {
         }
 
         return services;
+    }
+
+    public Service getServiceById(int id) {
+        Service service = null;
+        String sql = "SELECT * FROM services WHERE id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                service = new Service();
+                service.setId(rs.getInt("id"));
+                service.setTitle(rs.getString("title"));
+                service.setPrice(rs.getLong("price"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return service;
     }
 }

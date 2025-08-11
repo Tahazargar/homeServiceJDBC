@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,18 +38,23 @@
             <td><%= counter %></td>
             <td>#${userOrder.id}</td>
             <td>${userOrder.description}</td>
-            <td>${userOrder.price}</td>
-<%--            <td><fmt:formatDate value="${userOrder.dueDate}" pattern="yyyy-MM-dd"/></td>--%>
+            <td>$${userOrder.price}</td>
+            <td><fmt:formatDate value="${userOrder.dueDate}" pattern="yyyy-MM-dd"/></td>
             <td>${userOrder.address}</td>
             <td>
                 <c:choose>
-                    <c:when test="${userOrder.status == 0}">Inactive</c:when>
-                    <c:when test="${userOrder.status == 1}">Active</c:when>
-                    <c:otherwise>Banned</c:otherwise>
+                    <c:when test="${userOrder.status == 0}">Wating for experts</c:when>
+                    <c:when test="${userOrder.status == 1}">Approved</c:when>
+                    <c:when test="${userOrder.status == 2}">Started</c:when>
+                    <c:when test="${userOrder.status == 3}">Completed</c:when>
+                    <c:otherwise>Not defined</c:otherwise>
                 </c:choose>
             </td>
             <td>
-                <a href="userSubmittedOrders?id=${userOrder.id}">Delete</a>
+                <form action="userSubmittedOrders" method="POST">
+                    <input name="orderId" value="${userOrder.id}" type="hidden">
+                    <button type="submit">Delete</button>
+                </form>
             </td>
         </tr>
         <% counter++; %>

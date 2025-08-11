@@ -8,12 +8,11 @@ public class Order {
     private int id;
     private String description;
     private long price;
-    private Date date;
+    private Date dueDate;
     private short status;
     private String address;
     private User user;
     private List<Suggestion> suggestions;
-    private String dueDateFormatted;
 
     public Order() {}
 
@@ -41,12 +40,12 @@ public class Order {
         this.price = price;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDueDate(Date date) {
+        this.dueDate = date;
     }
 
     public short getStatus() {
@@ -81,11 +80,4 @@ public class Order {
         this.suggestions = suggestions;
     }
 
-    public String getDueDateFormatted() {
-        return dueDateFormatted;
-    }
-
-    public void setDueDateFormatted(String dueDateFormatted) {
-        this.dueDateFormatted = dueDateFormatted;
-    }
 }

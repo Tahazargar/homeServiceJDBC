@@ -157,6 +157,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setRole(rs.getShort("role"));
                 user.setStatus(rs.getShort("status"));
+                user.setCredit(rs.getInt("credit"));
                 user.setPassword(hashedPassword);
 
                 return user;
@@ -219,5 +220,31 @@ public class UserDAO {
         }
 
         return comments;
+    }
+
+    public void addCreditToUser(int userId, int credit) {
+        String sql = "UPDATE users SET credit = ? WHERE id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, credit);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCredit(int userId, long credit) {
+        String sql = "UPDATE users SET credit = ? WHERE id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, credit);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

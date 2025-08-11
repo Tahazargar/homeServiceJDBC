@@ -18,7 +18,7 @@ public class OrderDAO {
 
             ps.setString(1,order.getDescription());
             ps.setLong(2,order.getPrice());
-            ps.setTimestamp(3, Timestamp.from(OffsetDateTime.now(ZoneOffset.UTC).toInstant()));
+            ps.setDate(3, (Date) order.getDueDate());
             ps.setString(4, order.getAddress());
             ps.setInt(5, order.getId());
 
@@ -44,7 +44,7 @@ public class OrderDAO {
                 order.setPrice(rs.getLong("price"));
                 order.setStatus(rs.getShort("status"));
                 order.setAddress(rs.getString("address"));
-                order.setDate(rs.getTimestamp("due_date"));
+                order.setDueDate(rs.getTimestamp("due_date"));
 
                 return order;
             }
@@ -71,10 +71,9 @@ public class OrderDAO {
                 order.setPrice(rs.getLong("price"));
                 order.setStatus(rs.getShort("status"));
                 order.setAddress(rs.getString("address"));
-                order.setDate(rs.getTimestamp("due_date"));
+                order.setDueDate(rs.getTimestamp("due_date"));
 
                 orders.add(order);
-                return orders;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -87,9 +86,9 @@ public class OrderDAO {
         String sql = "DELETE FROM orders WHERE id = ?";
 
         try(Connection conn = DatabaseUtil.getConnection()) {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, id);
-            statement.executeUpdate(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -112,7 +111,7 @@ public class OrderDAO {
                 order.setPrice(rs.getLong("price"));
                 order.setStatus(rs.getShort("status"));
                 order.setAddress(rs.getString("address"));
-                order.setDate(rs.getTimestamp("due_date"));
+                order.setDueDate(rs.getTimestamp("due_date"));
                 orders.add(order);
             }
         }catch (SQLException e){
@@ -120,5 +119,92 @@ public class OrderDAO {
         }
 
         return orders;
+    }
+
+    public List<Order> getExpertJobsById(int expertId) {
+        String sql = "SELECT * FROM orders WHERE expert_id = ?";
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,expertId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setDescription(rs.getString("description"));
+                order.setPrice(rs.getLong("price"));
+                order.setStatus(rs.getShort("status"));
+                order.setAddress(rs.getString("address"));
+                order.setDueDate(rs.getTimestamp("due_date"));
+                order.setStatus(rs.getShort("status"));
+                orders.add(order);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
+
+    public void assignExpertToOrder(int userId, int orderId) {
+        String sql = "UPDATE orders SET expert_id = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,userId);
+            ps.setInt(2,orderId);
+
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void cancelExpertJob(int orderId) {
+        String sql = "UPDATE orders SET expert_id = null WHERE id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,orderId);
+
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void changeOrderStatus(int orderId, int status) {
+        String sql = "UPDATE orders SET status = ? WHERE id = ?";
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,status);
+            ps.setInt(2,orderId);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public int getPriceById(int id) {
+        String sql = "SELECT price FROM orders WHERE id = ?";
+        int price = 0;
+
+        try(Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                price = rs.getInt("price");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return price;
     }
 }

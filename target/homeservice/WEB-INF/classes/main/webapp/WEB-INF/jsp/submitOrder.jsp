@@ -9,6 +9,8 @@
     <label for="price">Proposed Price:</label><br>
     <input type="number" id="price" name="price" required><br><br>
 
+    <input name="serviceId" type="hidden" value="${param.serviceId}">
+
     <label for="description">Work Description:</label><br>
     <input type="text" id="description" name="description" required><br><br>
 
