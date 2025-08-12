@@ -1,4 +1,4 @@
-# 🏠 Home Services Management System V1 (Java + JDBC)
+# 🏠 Home Services Management System V2 (Spring boot + Hibernate)
 
 This project is a pure Java application using JDBC and PostgreSQL to manage a home service platform. It supports roles like **Admin**, **Customer**, and **Expert**, enabling service listings, user registration, expert approval, order handling, offers, credits, and feedback.
 
